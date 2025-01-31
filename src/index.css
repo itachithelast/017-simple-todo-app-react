@@ -1,0 +1,42 @@
+:root {
+  --main-background: #cde8e5;
+  --input-background: #eef7ff;
+  --elements: #7ab2b2;
+  --text: #4d869c;
+}
+* {
+    font-family: Arial, sans-serif;
+}
+body {
+  background: var(--main-background) !important;
+  color: var(--text) !important;
+}
+#input-form {
+  display: flex;
+}
+.container{
+    background: var(--input-background);
+}
+.enter-key {
+  height: 40px;
+  display: inline-block;
+  padding: 10px 20px;
+  border: 2px solid var(--text);
+  border-radius: 4px;
+  font-size: 16px;
+  background-color: var(--input-background);
+  color: var(--text);
+  position: relative;
+}
+.enter-key::after {
+  content: "↵";
+  position: absolute;
+  right: 10px;
+  font-size: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+input {
+  width: 100%;
+  height: 40px;
+}
