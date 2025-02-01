@@ -3,6 +3,7 @@
   --input-background: #eef7ff;
   --elements: #7ab2b2;
   --text: #4d869c;
+  --text-inactive: #99aabb;
 }
 * {
     font-family: Arial, sans-serif;
@@ -31,10 +32,13 @@ body {
 .enter-key::after {
   content: "↵";
   position: absolute;
-  right: 10px;
+  right: 15px;
   font-size: 20px;
   top: 50%;
   transform: translateY(-50%);
+}
+.text-inactive{
+  color: var(--text-inactive);
 }
 input {
   width: 100%;

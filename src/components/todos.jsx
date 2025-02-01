@@ -4,7 +4,7 @@ class ToDO extends Component {
   state = {};
   render() {
     return (
-      <div className="container mt-5 p-3 rounded-4">
+      <div className="container mt-5 p-5 rounded-4">
         <h3>Task Tracker</h3>
         <form id="input-form">
           <input
@@ -15,14 +15,24 @@ class ToDO extends Component {
           <button className="enter-key rounded"></button>
         </form>
 
-        <div className="pending row mt-5 border-bottom border-dark align-items-center p-3">
-          <i class="fa-regular fa-square col-1"></i>
-          <span className="col">
-            Watching the latest seminar about HTML changes
-          </span>
-          <i class="fa-solid fa-trash-can col-1"></i>
+        <div className="pending mt-5 p-3">
+          <div className="item-pending row align-items-center border-bottom border-dark ">
+            <i class="fa-regular fa-square col-1"></i>
+            <span className="col">
+              Watching the latest seminar about HTML changes
+            </span>
+            <i class="fa-solid fa-trash-can col-1"></i>
+          </div>
         </div>
-        <div className="completed"></div>
+        <div className="completed px-3">
+          <div className="item-complete row align-items-center border-bottom border-dark ">
+          <i class="fa-regular fa-square-check col-1"></i>
+            <span className="col text-decoration-line-through text-inactive">
+              Watching the latest seminar about HTML changes
+            </span>
+            <i class="fa-solid fa-trash-can col-1"></i>
+          </div>
+        </div>
       </div>
     );
   }
