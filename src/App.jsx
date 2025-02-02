@@ -5,16 +5,16 @@ import TasksContext from "./assets/context";
 class App extends Component {
   state = {
     tasks: [
-      { id: 1, name: "Read Chapter 1 of History Textbook", isPending: true },
-      { id: 2, name: "Complete Math Homework Problems", isPending: true },
-      { id: 3, name: "Write English Essay Draft", isPending: true },
-      { id: 4, name: "Study Biology Flashcards", isPending: true },
-      { id: 5, name: "Review Chemistry Notes", isPending: true },
-      { id: 6, name: "Practice Programming Exercises", isPending: true },
-      { id: 7, name: "Prepare for Physics Quiz", isPending: true },
-      { id: 8, name: "Research Project for Social Studies", isPending: false },
-      { id: 9, name: "Summarize Literature Readings", isPending: false },
-      { id: 10, name: "Organize Study Group Session", isPending: false },
+      { id: 0, name: "Read Chapter 1 of History Textbook", isPending: true },
+      { id: 1, name: "Complete Math Homework Problems", isPending: true },
+      { id: 2, name: "Write English Essay Draft", isPending: true },
+      { id: 3, name: "Study Biology Flashcards", isPending: true },
+      { id: 4, name: "Review Chemistry Notes", isPending: true },
+      { id: 5, name: "Practice Programming Exercises", isPending: true },
+      { id: 6, name: "Prepare for Physics Quiz", isPending: true },
+      { id: 7, name: "Research Project for Social Studies", isPending: false },
+      { id: 8, name: "Summarize Literature Readings", isPending: false },
+      { id: 9, name: "Organize Study Group Session", isPending: false },
     ],
   };
 
@@ -23,7 +23,9 @@ class App extends Component {
   };
   render() {
     return (
-      <TasksContext.Provider value={{ tasks: this.state.tasks , updateTasks : this.updateTasks}}>
+      <TasksContext.Provider
+        value={{ tasks: this.state.tasks, updateTasks: this.updateTasks }}
+      >
         <ToDO />
       </TasksContext.Provider>
     );

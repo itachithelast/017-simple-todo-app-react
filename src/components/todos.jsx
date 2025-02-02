@@ -3,6 +3,33 @@ import TasksContext from "../assets/context";
 
 class ToDO extends Component {
   static contextType = TasksContext;
+  state = {
+    input: ""
+  }
+
+  handleInputChange = (el)=>{
+    const input = el.value
+    this.setState({input: input})
+  }
+  handleAddTask = (e)=>{
+    e.preventDefault()
+    let id = null 
+    const idList = this.context.tasks.map(
+      (el) => Number(el.id)
+    )
+    idList.sort((a,b)=>a-b).forEach((element,index) => {
+      if(element!==index && !idList.includes(index)){
+        id = index
+      }
+    });
+    if (!id){
+      id = this.context.tasks.length
+    }
+    const name = this.state.input
+    const isPending = true
+    const updatedContext = [...this.context.tasks , {id,name,isPending}]
+    this.context.updateTasks(updatedContext)
+  }
 
   handleStatusChange = (el) => {
     const id = Number(el.parentElement.id);
@@ -54,13 +81,14 @@ class ToDO extends Component {
     return (
       <div className="container mt-5 p-5 rounded-4">
         <h3>Task Tracker</h3>
-        <form id="input-form">
+        <form onSubmit={(e)=>this.handleAddTask(e)} id="input-form">
           <input
             className="rounded-3 form-control"
             type="text"
             placeholder="Type in the task and press Enter to create!"
+            onChange={(e)=>this.handleInputChange(e.target)}
           />
-          <button className="enter-key rounded"></button>
+          <button type="submit" className="enter-key rounded"></button>
         </form>
         <div className="pending mt-5 p-3">{this.loadTasks(true)}</div>
         <div className="completed px-3">{this.loadTasks(false)}</div>
