@@ -4,43 +4,46 @@ import TasksContext from "../assets/context";
 class ToDO extends Component {
   static contextType = TasksContext;
   state = {
-    input: ""
-  }
+    input: "",
+  };
 
-  handleInputChange = (el)=>{
-    const input = el.value
-    this.setState({input: input})
-  }
-  handleAddTask = (e)=>{
-    e.preventDefault()
-    let id = null 
-    const idList = this.context.tasks.map(
-      (el) => Number(el.id)
-    )
-    idList.sort((a,b)=>a-b).forEach((element,index) => {
-      if(element!==index && !idList.includes(index)){
-        id = index
+  handleInputChange = (el) => {
+    this.setState({ input: el.value });
+  };
+
+  handleAddTask = (e) => {
+    e.preventDefault();
+    if (this.state.input) {
+      let id = null;
+      const idList = this.context.tasks.map((el) => Number(el.id));
+      idList
+        .sort((a, b) => a - b)
+        .forEach((element, index) => {
+          if (element !== index && !idList.includes(index)) {
+            id = index;
+          }
+        });
+      if (!id) {
+        id = this.context.tasks.length;
       }
-    });
-    if (!id){
-      id = this.context.tasks.length
+      const name = this.state.input;
+      const isPending = true;
+      const updatedContext = [...this.context.tasks, { id, name, isPending }];
+      this.context.updateTasks(updatedContext);
+      this.setState({input:''})
     }
-    const name = this.state.input
-    const isPending = true
-    const updatedContext = [...this.context.tasks , {id,name,isPending}]
-    this.context.updateTasks(updatedContext)
-  }
+  };
 
   handleStatusChange = (el) => {
     const id = Number(el.parentElement.id);
     const updatedTasks = this.context.tasks.map((task) => {
-        if (task.id === id) {
-          return { ...task, isPending: !task.isPending };
-        }
-        return task;
-      })
-    this.context.updateTasks(updatedTasks)
-    };
+      if (task.id === id) {
+        return { ...task, isPending: !task.isPending };
+      }
+      return task;
+    });
+    this.context.updateTasks(updatedTasks);
+  };
   handleEdit = null;
   HandleDelete = null;
 
@@ -81,12 +84,13 @@ class ToDO extends Component {
     return (
       <div className="container mt-5 p-5 rounded-4">
         <h3>Task Tracker</h3>
-        <form onSubmit={(e)=>this.handleAddTask(e)} id="input-form">
+        <form onSubmit={(e) => this.handleAddTask(e)} id="input-form">
           <input
             className="rounded-3 form-control"
             type="text"
             placeholder="Type in the task and press Enter to create!"
-            onChange={(e)=>this.handleInputChange(e.target)}
+            value={this.state.input}
+            onChange={(e) => this.handleInputChange(e.target)}
           />
           <button type="submit" className="enter-key rounded"></button>
         </form>
