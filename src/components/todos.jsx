@@ -1,10 +1,13 @@
 import React, { Component } from "react";
 import TasksContext from "../assets/context";
+import DialogRemoveItem from "./dialog-remove";
 
 class ToDO extends Component {
   static contextType = TasksContext;
   state = {
     input: "",
+    isDialogShowing: false,
+    editId : null
   };
 
   handleInputChange = (el) => {
@@ -45,7 +48,11 @@ class ToDO extends Component {
     this.context.updateTasks(updatedTasks);
   };
 
-  handleEdit = null;
+  handleEdit = (el) => {
+    const id = Number(el.parentElement.id);
+    this.setState({ isDialogShowing: true , editId: id});
+  };
+
   HandleDelete = (el) => {
     const id = Number(el.parentElement.id);
     const updatedTasks = this.context.tasks.filter(
@@ -87,23 +94,37 @@ class ToDO extends Component {
       ));
   };
 
+  handleClose = ()=>{
+    this.setState({isDialogShowing: false})
+
+  }
+  handleCancel = (e)=>{
+    e.preventDefault()
+    this.setState({isDialogShowing: false})
+
+  }
   render() {
     return (
-      <div className="container mt-5 p-5 rounded-4">
-        <h3>Task Tracker</h3>
-        <form onSubmit={(e) => this.handleAddTask(e)} id="input-form">
-          <input
-            className="rounded-3 form-control"
-            type="text"
-            placeholder="Type in the task and press Enter to create!"
-            value={this.state.input}
-            onChange={(e) => this.handleInputChange(e.target)}
-          />
-          <button type="submit" className="enter-key rounded"></button>
-        </form>
-        <div className="pending mt-5 p-3">{this.loadTasks(true)}</div>
-        <div className="completed px-3">{this.loadTasks(false)}</div>
-      </div>
+      <>
+        {this.state.isDialogShowing && <DialogRemoveItem id={this.state.editId} handleCancel = {this.handleCancel} handleClose = {this.handleClose}/>}
+        {!this.state.isDialogShowing && (
+          <div className="container mt-5 p-5 rounded-4">
+            <h3>Task Tracker</h3>
+            <form onSubmit={(e) => this.handleAddTask(e)} id="input-form">
+              <input
+                className="rounded-3 form-control"
+                type="text"
+                placeholder="Type in the task and press Enter to create!"
+                value={this.state.input}
+                onChange={(e) => this.handleInputChange(e.target)}
+              />
+              <button type="submit" className="enter-key rounded"></button>
+            </form>
+            <div className="pending mt-5 p-3">{this.loadTasks(true)}</div>
+            <div className="completed px-3">{this.loadTasks(false)}</div>
+          </div>
+        )}
+      </>
     );
   }
 }
