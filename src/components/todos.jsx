@@ -7,7 +7,7 @@ class ToDO extends Component {
   state = {
     input: "",
     isDialogShowing: false,
-    editId : null
+    editId: null,
   };
 
   handleInputChange = (el) => {
@@ -50,7 +50,7 @@ class ToDO extends Component {
 
   handleEdit = (el) => {
     const id = Number(el.parentElement.id);
-    this.setState({ isDialogShowing: true , editId: id});
+    this.setState({ isDialogShowing: true, editId: id });
   };
 
   HandleDelete = (el) => {
@@ -94,19 +94,24 @@ class ToDO extends Component {
       ));
   };
 
-  handleClose = ()=>{
-    this.setState({isDialogShowing: false})
+  handleClose = () => {
+    this.setState({ isDialogShowing: false });
+  };
 
-  }
-  handleCancel = (e)=>{
-    e.preventDefault()
-    this.setState({isDialogShowing: false})
-
-  }
+  handleCancel = (e) => {
+    e.preventDefault();
+    this.setState({ isDialogShowing: false });
+  };
   render() {
     return (
       <>
-        {this.state.isDialogShowing && <DialogRemoveItem id={this.state.editId} handleCancel = {this.handleCancel} handleClose = {this.handleClose}/>}
+        {this.state.isDialogShowing && (
+          <DialogRemoveItem
+            id={this.state.editId}
+            handleCancel={this.handleCancel}
+            handleClose={this.handleClose}
+          />
+        )}
         {!this.state.isDialogShowing && (
           <div className="container mt-5 p-5 rounded-4">
             <h3>Task Tracker</h3>

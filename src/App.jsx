@@ -6,21 +6,28 @@ class App extends Component {
   state = {
     tasks: [
       { id: 0, name: "Read Chapter 1 of History Textbook", isPending: true },
-      { id: 1, name: "Complete Math Homework Problems", isPending: true },
-      { id: 2, name: "Write English Essay Draft", isPending: true },
-      { id: 3, name: "Study Biology Flashcards", isPending: true },
-      { id: 4, name: "Review Chemistry Notes", isPending: true },
-      { id: 5, name: "Practice Programming Exercises", isPending: true },
-      { id: 6, name: "Prepare for Physics Quiz", isPending: true },
-      { id: 7, name: "Research Project for Social Studies", isPending: false },
-      { id: 8, name: "Summarize Literature Readings", isPending: false },
-      { id: 9, name: "Organize Study Group Session", isPending: false },
+      { id: 1, name: "Organize Study Group Session", isPending: false },
     ],
   };
+
+  componentDidUpdate(prevProps, prevState) {
+    // Save to local storage whenever tasks state changes
+    if (prevState.tasks !== this.state.tasks) {
+      localStorage.setItem('tasks', JSON.stringify(this.state.tasks));
+    }
+  }
+
+  componentDidMount(){
+    const tasks = localStorage.getItem("tasks")
+    if (tasks){
+      this.setState({tasks: JSON.parse(tasks)})
+    }
+  }
 
   updateTasks = (updatedTasks) => {
     this.setState({ tasks: updatedTasks });
   };
+
   render() {
     return (
       <TasksContext.Provider
