@@ -30,7 +30,7 @@ class ToDO extends Component {
       const isPending = true;
       const updatedContext = [...this.context.tasks, { id, name, isPending }];
       this.context.updateTasks(updatedContext);
-      this.setState({input:''})
+      this.setState({ input: "" });
     }
   };
 
@@ -44,8 +44,15 @@ class ToDO extends Component {
     });
     this.context.updateTasks(updatedTasks);
   };
+
   handleEdit = null;
-  HandleDelete = null;
+  HandleDelete = (el) => {
+    const id = Number(el.parentElement.id);
+    const updatedTasks = this.context.tasks.filter(
+      (element) => element.id !== id
+    );
+    this.context.updateTasks(updatedTasks);
+  };
 
   loadTasks = (isPending) => {
     return this.context.tasks
